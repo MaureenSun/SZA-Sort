@@ -1,27 +1,19 @@
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <random>
+#include "bubbleSort.h"
+#include "mergeSort.h"
 
 int main() {
-    // Create a window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Sort Visualization");
 
-    // Main loop
-    while (window.isOpen()) {
-        // Handle events
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(100, 600);
 
-        // Clear the window
-        window.clear(sf::Color::White);
-
-        // Draw something
-        // (For now, let's just display a white window)
-
-        // Display the window contents
-        window.display();
+    std::vector<int> data;
+    for (int i = 0; i < 80; ++i) {
+        data.push_back(dis(gen));
     }
 
-    return 0;
-}
+    sf::RectangleShape rectangles(sf::Vector2

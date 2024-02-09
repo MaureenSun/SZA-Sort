@@ -1,4 +1,7 @@
 #include "headersAlgos/bubbleSort.hpp"
+#include <thread>  
+#include <chrono> 
+#include <iostream> 
 
 void BubbleSort::sort(std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
     int n = arr.size();

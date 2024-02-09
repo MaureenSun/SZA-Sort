@@ -1,5 +1,7 @@
+#include <iostream>    
 #include <thread>  // For std::this_thread::sleep_for
 #include <chrono>  // For std::chrono::milliseconds
+#include <windows.h>
 #include "headersAlgos/quickSort.hpp"
 
 void QuickSort::sort(std::vector<int>& arr, int low, int high, sf::RenderWindow& window, sf::RectangleShape& rectangles) {

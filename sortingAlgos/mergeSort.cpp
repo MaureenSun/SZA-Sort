@@ -1,30 +1,18 @@
-#include <thread>
-#include <chrono>
 #include "headersAlgos/mergeSort.hpp"
-#include <iostream>    
+#include "visualization.hpp" // Include the visualization header
 
-// Function is responsible for sorting iven vector 
-// Recursively returns array into two halves, sorts them separately and merges sorted halves
-void MergeSort::sort(std::vector<int>& arr, int l, int r, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
+// Function is responsible for sorting given vector 
+// Recursively returns array into two halves, sorts them separately, and merges sorted halves
+void MergeSort::sort(std::vector<int>& arr, int l, int r, sf::RenderWindow& window, sf::RectangleShape& rectangles, void(*visualizeSort)(sf::RenderWindow&, const std::vector<int>&, sf::RectangleShape&)) {
     if (l >= r) return;
     int m = l + (r - l) / 2;
-    sort(arr, l, m, window, rectangles);
-    sort(arr, m + 1, r, window, rectangles);
-    merge(arr, l, m, r, window, rectangles);
+    sort(arr, l, m, window, rectangles, visualizeSort);
+    sort(arr, m + 1, r, window, rectangles, visualizeSort);
+    merge(arr, l, m, r, window, rectangles, visualizeSort);
 }
 
-void MergeSort::visualize(const std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
-    window.clear(sf::Color::White);
-    for (size_t i = 0; i < arr.size(); ++i) {
-        rectangles.setPosition(i * 10, 600 - arr[i]);
-        window.draw(rectangles);
-    }
-    window.display();
-    std::this_thread::sleep_for(std::chrono::milliseconds(50)); //causes current thread to pause for 50 milli before conitnuing execution, slows down animation
-    
-}
 
-void MergeSort::merge(std::vector<int>& arr, int l, int m, int r, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
+void MergeSort::merge(std::vector<int>& arr, int l, int m, int r, sf::RenderWindow& window, sf::RectangleShape& rectangles, void(*visualizeSort)(sf::RenderWindow&, const std::vector<int>&, sf::RectangleShape&)) {
     int n1 = m - l + 1;
     int n2 = r - m;
 
@@ -44,7 +32,7 @@ void MergeSort::merge(std::vector<int>& arr, int l, int m, int r, sf::RenderWind
             ++j;
         }
 
-        visualize(arr, window, rectangles);
+        visualize(arr, window, rectangles); // Utilize the visualize function from visualization.hpp
         ++k;
     }
 
@@ -62,4 +50,3 @@ void MergeSort::merge(std::vector<int>& arr, int l, int m, int r, sf::RenderWind
         visualize(arr, window, rectangles);
     }
 }
-

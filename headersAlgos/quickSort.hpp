@@ -5,9 +5,8 @@
 
 class QuickSort {
 public:
-    static void sort(std::vector<int>& arr, int low, int high, sf::RenderWindow& window, sf::RectangleShape& rectangles);
+    static void sort(std::vector<int>& arr, int low, int high, sf::RenderWindow& window, sf::RectangleShape& rectangles, void(*visualizeSort)(sf::RenderWindow&, const std::vector<int>&, sf::RectangleShape&));
 
 private:
     static int partition(std::vector<int>& arr, int low, int high, sf::RenderWindow& window, sf::RectangleShape& rectangles);
-    static void visualize(const std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles);
 };

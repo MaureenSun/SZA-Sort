@@ -1,14 +1,11 @@
-#include <iostream>    
-#include <thread>  // For std::this_thread::sleep_for
-#include <chrono>  // For std::chrono::milliseconds
-#include <windows.h>
 #include "headersAlgos/quickSort.hpp"
+#include "visualization.hpp" // Include the visualization header
 
-void QuickSort::sort(std::vector<int>& arr, int low, int high, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
+void QuickSort::sort(std::vector<int>& arr, int low, int high, sf::RenderWindow& window, sf::RectangleShape& rectangles, void(*visualizeSort)(sf::RenderWindow&, const std::vector<int>&, sf::RectangleShape&)) {
     if (low < high) {
         int pi = partition(arr, low, high, window, rectangles);
-        sort(arr, low, pi - 1, window, rectangles);
-        sort(arr, pi + 1, high, window, rectangles);
+        sort(arr, low, pi - 1, window, rectangles, visualizeSort); // Pass the function pointer without invoking it
+        sort(arr, pi + 1, high, window, rectangles, visualizeSort); 
     }
 }
 
@@ -20,21 +17,11 @@ int QuickSort::partition(std::vector<int>& arr, int low, int high, sf::RenderWin
         if (arr[j] < pivot) {
             ++i;
             std::swap(arr[i], arr[j]);
-            visualize(arr, window, rectangles);
+            visualize(arr, window, rectangles); // Utilize the visualize function from visualization.hpp
         }
     }
 
     std::swap(arr[i + 1], arr[high]);
-    visualize(arr, window, rectangles);
+    visualize(arr, window, rectangles); // Utilize the visualize function from visualization.hpp
     return i + 1;
-}
-
-void QuickSort::visualize(const std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
-    window.clear(sf::Color::White);
-    for (size_t i = 0; i < arr.size(); ++i) {
-        rectangles.setPosition(i * 10, 600 - arr[i]);
-        window.draw(rectangles);
-    }
-    window.display();
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
 }

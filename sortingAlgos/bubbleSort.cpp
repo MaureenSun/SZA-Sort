@@ -1,9 +1,8 @@
 #include "headersAlgos/bubbleSort.hpp"
-#include <thread>  
-#include <chrono> 
-#include <iostream> 
+#include "visualization.hpp" // Include the visualization header
 
-void BubbleSort::sort(std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
+// In BUBBLESORT.cpp
+void BubbleSort::sort(std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles, void(*visualizeSort)(sf::RenderWindow&, const std::vector<int>&, sf::RectangleShape&)) {
     int n = arr.size();
     bool swapped;
     do {
@@ -12,18 +11,8 @@ void BubbleSort::sort(std::vector<int>& arr, sf::RenderWindow& window, sf::Recta
             if (arr[i - 1] > arr[i]) {
                 std::swap(arr[i - 1], arr[i]);
                 swapped = true;
-                visualize(arr, window, rectangles);
+                visualizeSort(window, arr, rectangles); // Call the visualizeSort function
             }
         }
     } while (swapped);
-}
-
-void BubbleSort::visualize(const std::vector<int>& arr, sf::RenderWindow& window, sf::RectangleShape& rectangles) {
-    window.clear(sf::Color::White);
-    for (size_t i = 0; i < arr.size(); ++i) {
-        rectangles.setPosition(i * 10, 600 - arr[i]);
-        window.draw(rectangles);
-    }
-    window.display();
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
 }
